@@ -36,7 +36,7 @@ Classes were designed to ensure separation of concerns and reusability. The main
 
 ### 2.3 UML Diagram
 
-**[Placeholder for UML Diagram]**
+![UML Diagram](assets/uml-dia.png)
 
 ## 3. Implementation
 
