@@ -1,6 +1,6 @@
 # pointcloud-oop
 
-Python implementation of point cloud classification for roof and wall using RANSAC for GmE 205.
+Python implementation of point cloud classification for roofs and walls using RANSAC for GmE 205.
 
 # Point Cloud Classification of Roofs and Facades Using Object-Oriented Programming (OOP)
 
