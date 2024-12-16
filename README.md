@@ -40,6 +40,8 @@ Classes were designed to ensure separation of concerns and reusability. The main
 
 ## 3. Implementation
 
+![Methodology](assets/Methodology.png)
+
 The implementation was carried out using Python with the Open3D library. Key modules in the pipeline include:
 
 ### 3.1 Data Loading
