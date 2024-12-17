@@ -39,6 +39,30 @@ class BasePointCloudProcessor:
         """Return the metadata dictionary."""
         return self.metadata
 
+    def log_table(self, headers, rows, title=None):
+        """
+        Logs data in table format.
+        Args:
+            headers (list): List of column headers.
+            rows (list of lists): Each sublist represents a row of data.
+            title (str): Optional title for the table.
+        """
+        if title:
+            print("\n" + "=" * len(title))
+            print(title)
+            print("=" * len(title))
+        
+        # Print headers
+        row_format = "| {:<12} " * len(headers) + "|"
+        print(row_format.format(*headers))
+        print("|" + "------------" * len(headers) + "|")
+
+        # Print rows
+        for row in rows:
+            print(row_format.format(*row))
+        print("=" * (13 * len(headers)))
+
     def process(self):
         """Override this in child classes for specific processing steps."""
         raise NotImplementedError("Subclasses must implement this method.")
+
