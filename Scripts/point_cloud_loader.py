@@ -45,6 +45,9 @@ class PointCloudLoader(BasePointCloudProcessor):
         """
         try:
             result = self.load_data()
+            headers = ["File Path", "Total Points"]
+            rows = [[self.file_path, len(result.points)]]
+            self.log_table(headers, rows, "Loaded Point Cloud")
             self.track_transformation("Completed loading pipeline.")
             return result
         except RuntimeError as e:

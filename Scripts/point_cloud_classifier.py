@@ -78,6 +78,18 @@ class PointCloudClassifier(BasePointCloudProcessor):
             )
             print(f"Detected a plane with {len(plane.points)} points.")
 
+        # Log detected planes
+        headers = ["Plane", "Points", "Normal Vector"]
+        rows = [
+            [
+                i + 1,
+                len(plane.points),
+                f"[{normal[0]:.4f}, {normal[1]:.4f}, {normal[2]:.4f}]",
+            ]
+            for i, (plane, normal) in enumerate(zip(planes, plane_normals))
+        ]
+        self.log_table(headers, rows, "Detected Planes")
+
         self.add_metadata("detected_planes", len(planes))
         print(f"Detected {len(planes)} planes.")
         return planes, plane_normals
@@ -91,23 +103,32 @@ class PointCloudClassifier(BasePointCloudProcessor):
         """
         walls = []
         roofs = []
+        rows = []
 
-        for plane, normal in zip(planes, plane_normals):
+        for i, (plane, normal) in enumerate(zip(planes, plane_normals)):
             normal /= np.linalg.norm(normal)
             points = np.asarray(plane.points)
             min_z = np.min(points[:, 2])
             max_z = np.max(points[:, 2])
 
-            print(f"Plane normal: {normal}, Height range: {min_z} to {max_z}")
-
             if abs(normal[2]) < 0.3:  # Vertical planes (walls)
                 walls.append(plane)
+                plane_type = "Wall"
             elif (
                 abs(normal[2]) > 0.7 and max_z >= min_roof_height
             ):  # Horizontal planes (roofs)
                 roofs.append(plane)
+                plane_type = "Roof"
             else:
-                print("Plane classified as ground or oblique, excluded.")
+                plane_type = "Other"
+
+            rows.append(
+                [i + 1, plane_type, len(plane.points), f"{min_z:.2f} to {max_z:.2f}"]
+            )
+
+        # Log classified planes
+        headers = ["Plane", "Type", "Points", "Height Range"]
+        self.log_table(headers, rows, "Classified Planes")
 
         self.add_metadata("classified_walls", len(walls))
         self.add_metadata("classified_roofs", len(roofs))

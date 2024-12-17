@@ -51,6 +51,14 @@ class PointCloudVisualizer(BasePointCloudProcessor):
         self.track_transformation(
             f"Prepared classified clouds: {len(combined_cloud.points)} total points."
         )
+
+        # Log summary table
+        headers = ["Category", "Points"]
+        rows = [
+            ["Walls", len(walls_combined.points)],
+            ["Roofs", len(roofs_combined.points)],
+        ]
+        self.log_table(headers, rows, "Classified Clouds Summary")
         return combined_cloud
 
     def preprocess_and_visualize(self):
