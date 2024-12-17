@@ -7,39 +7,31 @@ from point_cloud_classifier import PointCloudClassifier
 def main():
     file_path = "../data/plaza_roma.laz"
 
-    # Step 1: Load the point cloud
+    print("\n===== Step 1: Loading the Point Cloud =====")
     loader = PointCloudLoader(file_path)
     raw_cloud = loader.process()
-    print("Point cloud loaded successfully.")
 
-    # Step 2: Visualize the loaded point cloud
+    print("\n===== Step 2: Visualizing the Raw Point Cloud =====")
     visualizer = PointCloudVisualizer(raw_cloud)
     visualizer.visualize()
-    print("Visualized loaded point cloud.")
 
-    # Step 3: Preprocess the point cloud
+    print("\n===== Step 3: Preprocessing and Segmenting the Point Cloud =====")
     segmenter = PointCloudSegmenter(raw_cloud)
     preprocessed_cloud = segmenter.preprocess_and_segment()
-    visualizer.point_cloud = (
-        preprocessed_cloud  # Update visualizer with the preprocessed cloud
-    )
+    visualizer.point_cloud = preprocessed_cloud
     visualizer.visualize()
-    print("Visualized preprocessed and segmented point cloud.")
 
-    # Step 4: Classify the planes (walls and roofs)
+    print("\n===== Step 4: Classifying Planes (Walls and Roofs) =====")
     classifier = PointCloudClassifier(preprocessed_cloud)
     classified_planes = classifier.process()
-    print("Planes classified successfully.")
 
-    # Step 5: Visualize the classified planes
+    print("\n===== Step 5: Visualizing Classified Planes =====")
     visualizer.visualize_classified_clouds(
         classified_planes["walls"], classified_planes["roofs"]
     )
-    print("Visualized classified planes.")
 
-    # Step 6
-    # print(classifier.get_metadata()["history"])
-    print("All steps completed successfully.")
+    print("\n===== Process Complete =====")
+    print("Pipeline execution completed successfully.")
 
 
 if __name__ == "__main__":
