@@ -114,3 +114,4 @@ The research underscores the potential of OOP in point cloud data processing. Th
 
 - Open3D Documentation. Retrieved from https://www.open3d.org/
 - laspy Documentation. Retrieved from https://laspy.readthedocs.io/
+- Plaza Roma Dataset. Retrieved from https://github.com/maning/plaza-roma-imagery/
