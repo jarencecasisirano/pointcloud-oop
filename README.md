@@ -112,77 +112,41 @@ The **PointCloudVisualizer** rendered the results for analysis. Classified walls
 
 -----------------------edit this-------------------
 
-## 3. Implementation
+### 2.3 Pipeline Execution
 
+The workflow proceeded as follows:
 
+1. The PointCloudLoader loaded the raw .laz point cloud file.
+2.	The PointCloudPreprocessor cleaned the data by removing outliers and downsampling.
+3.	The PointCloudSegmenter filtered the data to isolate building structures and removed ground points.
+4.	The PointCloudClassifier detected planar surfaces and classified them into roofs and facades.
+5.	The PointCloudVisualizer rendered the final results for analysis
 
-The implementation was carried out using Python with the Open3D library. Key modules in the pipeline include:
+Each stage in the pipeline was implemented as an independent class, ensuring modularity, reusability, and scalability. The detailed execution of these stages, combined with the structured object-oriented design, allowed for an efficient and maintainable point cloud classification process.
 
-### 3.1 Data Loading
+## 3. Results
 
-The `PointCloudLoader` class utilizes the `laspy` library to read .LAZ files and convert them into an Open3D point cloud object.
+The pipeline was tested on the plaza roma point cloud, a subset of Intramuros drone imagery data provided by Datum PH to OpenStreetMap Philippines under the 2021 Drone Imagery Collection Grant by Datum & OSMph. The results demonstrate accurate classification of roofs and facades, with effective visualization of the outcomes. However, some improvements can still be made. Key results include:
+ - Number of detected planes: 20
+ - Number of classified roofs: 6
+ - Number of classified walls: 14
 
-```python
-loader = PointCloudLoader(file_path="../data/plaza_roma.laz")
-raw_cloud = loader.process()
-```
+## 4. Discussion
 
-### 3.2 Preprocessing
+### 4.1 Advantages of the OOP Approach
 
-The `PointCloudPreprocessor` class removes statistical outliers and downsamples the data for computational efficiency.
+ - Modularity: Independent classes facilitate easier debugging, testing, and maintenance.
+ - Reusability: Classes can be adapted for similar projects with minimal modifications.
+ - Scalability: New functionalities can be added without affecting existing code.
 
-```python
-preprocessor = PointCloudPreprocessor(raw_cloud)
-processed_cloud = preprocessor.process()
-```
+### 4.1 Challenges and Limitations
 
-### 3.3 Segmentation
+ - Performance: Processing large point cloud datasets can be computationally intensive
+ - Accuracy: The quality of classification depends on point cloud density and noise levels
 
-Segmentation is performed using polygon filters and ground removal techniques to isolate structures of interest.
+## 4. Conclusion
 
-```python
-segmenter = PointCloudSegmenter(processed_cloud)
-segmented_cloud = segmenter.preprocess_and_segment()
-```
-
-### 3.4 Classification
-
-Planar surfaces are identified and classified into roofs and facades based on their normals and height thresholds.
-
-```python
-classifier = PointCloudClassifier(segmented_cloud)
-classified_planes = classifier.process()
-```
-
-### 3.5 Visualization
-
-The `PointCloudVisualizer` class renders the classified roofs and facades for analysis.
-
-```python
-visualizer = PointCloudVisualizer()
-visualizer.visualize_classified_clouds(classified_planes["walls"], classified_planes["roofs"])
-```
-
-## 4. Results
-
-The pipeline was tested on a point cloud dataset representing urban structures. The results demonstrate accurate classification of roofs and facades, with effective visualization of the outcomes.
-
-## 5. Discussion
-
-### 5.1 Advantages of OOP Approach
-
-- **Modularity**: Independent classes facilitate easier debugging and testing.
-- **Reusability**: Classes can be adapted for similar projects with minimal modifications.
-- **Scalability**: New functionalities can be added without impacting existing code.
-
-### 5.2 Challenges and Limitations
-
-- **Performance**: The computational cost of preprocessing and segmentation for large datasets.
-- **Accuracy**: Variability in classification results due to point cloud density and noise.
-
-## 6. Conclusion
-
-The research underscores the potential of OOP in point cloud data processing. The modular design enhances maintainability and scalability, paving the way for broader applications in geospatial analysis and urban modeling.
+This project demonstrates a robust, modular pipeline for point cloud classification of roofs and facades using object-oriented programming. By providing an efficient and reusable framework, the study contributes to advancing 3D modeling, urban planning, and related geospatial applications. Future work includes optimizing computational performance and integrating machine learning techniques for improved classification accuracy.
 
 ## References
 
