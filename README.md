@@ -6,11 +6,15 @@ Python implementation of point cloud classification for roofs and walls using RA
 
 ## Abstract
 
-This research explores the application of Object-Oriented Programming (OOP) principles in the classification of roofs and facades from point cloud data. Leveraging modular and reusable code architecture, the study demonstrates a comprehensive pipeline for point cloud processing, segmentation, and classification, with an emphasis on scalability and maintainability.
+This project explores the application of Object-Oriented Programming (OOP) principles in the classification of roofs and facades from point cloud data. Leveraging modular and reusable code architecture, the study demonstrates a comprehensive pipeline for point cloud processing, segmentation, and classification, with an emphasis on scalability and maintainability.
 
 ## 1. Introduction
 
 Point cloud data has become a critical asset in 3D modeling, urban planning, and geospatial analysis. However, processing and extracting meaningful information from such data can be challenging due to its unstructured nature. This paper focuses on classifying roofs and facades from point clouds using an object-oriented programming paradigm. The structured approach ensures a reusable and scalable framework while maintaining clarity and modularity in implementation.
+
+### 1.1 Rationale Behind the Project
+
+The rapid advancement of LiDAR technology and photogrammetry has enabled the acquisition of high-resolution point cloud data. While these datasets are highly detailed, they lack explicit structure, making it difficult to extract specific features like roofs and facades efficiently. Developing an automated, modular pipeline for classifying roofs and facades addresses a key need in urban modeling and related applications. This project leverages object-oriented programming to create a scalable, reusable framework that simplifies the processing, segmentation, and classification of point cloud data.
 
 ## 2. Methodology
 
