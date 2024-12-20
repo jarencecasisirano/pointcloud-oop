@@ -144,7 +144,7 @@ The pipeline was tested on the plaza roma point cloud, a subset of Intramuros dr
  - Performance: Processing large point cloud datasets can be computationally intensive
  - Accuracy: The quality of classification depends on point cloud density and noise levels
 
-## 4. Conclusion
+## 5. Conclusion
 
 This project demonstrates a robust, modular pipeline for point cloud classification of roofs and facades using object-oriented programming. By providing an efficient and reusable framework, the study contributes to advancing 3D modeling, urban planning, and related geospatial applications. Future work includes optimizing computational performance and integrating machine learning techniques for improved classification accuracy.
 
