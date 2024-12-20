@@ -16,35 +16,105 @@ Point cloud data has become a critical asset in 3D modeling, urban planning, and
 
 The rapid advancement of LiDAR technology and photogrammetry has enabled the acquisition of high-resolution point cloud data. While these datasets are highly detailed, they lack explicit structure, making it difficult to extract specific features like roofs and facades efficiently. Developing an automated, modular pipeline for classifying roofs and facades addresses a key need in urban modeling and related applications. This project leverages object-oriented programming to create a scalable, reusable framework that simplifies the processing, segmentation, and classification of point cloud data.
 
+### 1.2 Significance of the Project
+
+This project contributes to advancing research in 3D modeling and its related applications in the following ways:
+ - **Urban Planning**: Efficient extraction of roofs and facades enables detailed city modeling, which supports urban planning and infrastructure development.
+ - **Building Information Modeling (BIM)**: Automating the classification of building features like roofs and facades can streamline BIM workflows for architects and engineers.
+ - **Disaster Management**: Accurate 3D models can assist in identifying structural damage to buildings after natural disasters.
+ - **Solar Potential Estimation**: Extracting and analyzing roof planes aids in determining suitable areas for solar panel installations.
+ - **Heritage Preservation**: Detailed classification of building exteriors facilitates 3D reconstruction for cultural heritage preservation
+
+### 1.3 Objectives of the Project
+
+The primary objectives of this project are:
+1. To develop a modular pipeline for processing, segmenting, and classifying point cloud data.
+2. To implement object-oriented programming principles for enhanced modularity, reusability, and scalability.
+3. To accurately classify roofs and facades from point cloud data using geometric properties such as plane orientation and height thresholds.
+4. To provide effective visualization of classified structures for further analysis.
+5. To demonstrate the applicability of the developed pipeline for real-world 3D modeling and geospatial applications.
+
 ## 2. Methodology
 
-### 2.1 System Architecture
+### 2.1 Workflow Overview
 
-The pipeline for point cloud classification is organized into modular components, each implemented as an independent Python class. The core stages include:
+The methodology followed a structured workflow, as shown in the figure below. The project began with loading the raw point cloud data, followed by preprocessing to remove noise and downsample the dataset. The cleaned data was then segmented to isolate regions of interest, such as building structures. Planar surfaces were detected from the segmented data and classified into roofs and facades based on their geometric properties. Finally, the results were visualized for further analysis and evaluation.
 
-1. **Data Loading**: Reading point cloud data from .LAZ files.
-2. **Preprocessing**: Removing outliers and downsampling for efficient processing.
-3. **Segmentation**: Extracting regions of interest through bounding box and ground removal techniques.
-4. **Classification**: Identifying planar surfaces and categorizing them as roofs or facades based on geometric properties.
-5. **Visualization**: Rendering processed data and classified structures.
+![Methodology](assets/Methodology.png)
 
-### 2.2 Object-Oriented Design
+### 2.2 System Architecture
 
-Classes were designed to ensure separation of concerns and reusability. The main classes implemented are:
-
-- `PointCloudLoader`: For loading point cloud data from files.
-- `PointCloudPreprocessor`: For outlier removal and downsampling.
-- `PointCloudSegmenter`: For filtering and segmentation based on spatial constraints.
-- `PointCloudClassifier`: For detecting and classifying planar structures.
-- `PointCloudVisualizer`: For visualizing point cloud data and classification results.
-
-### 2.3 UML Diagram
+The system architecture, depicted in the following figure, consists of modular components implemented as Python classes. These classes were designed following object-oriented programming principles to ensure separation of concerns and reusability.
 
 ![UML Diagram](assets/uml-dia.png)
 
+
+#### 1. Data Loading
+
+The **PointCloudLoader** class handled the reading of `.laz` point cloud files. Using the `laspy` library, the raw data was extracted and converted into an Open3D-compatible point cloud object. This ensured compatibility with the Open3D library for further processing.
+
+##### Attributes
+- **`file_path`** (*str*): Path to the input `.laz` file.
+
+##### Methods
+- **`load_data()`**: Reads and processes the file into an Open3D point cloud.
+- **`process()`**: Executes the data loading pipeline.
+
+---
+
+#### 2. Preprocessing
+
+The **PointCloudPreprocessor** class was responsible for cleaning the raw point cloud data. This was done through:
+- **Statistical Outlier Removal**: Filtering noise.
+- **Voxel Grid Downsampling**: Reducing the point cloud density.
+
+##### Methods
+- **`remove_outliers(nb_neighbors, std_ratio)`**: Filters noisy points using statistical analysis.
+- **`downsample(voxel_size)`**: Reduces data density using voxel grid filtering.
+- **`process()`**: Runs the preprocessing steps sequentially.
+
+---
+
+#### 3. Segmentation
+
+The **PointCloudSegmenter** class isolated building structures from the preprocessed data. This involved:
+- **Polygon-based Filtering**: Retaining points within a specific spatial extent.
+- **Ground Removal**: Eliminating points below a height threshold.
+
+##### Methods
+- **`polygon_filter(polygon_coords)`**: Applies spatial filtering using a user-defined polygon boundary.
+- **`ground_removal(z_threshold)`**: Removes ground-level points based on Z-coordinate values.
+- **`preprocess_and_segment()`**: Combines preprocessing and segmentation tasks.
+
+---
+
+#### 4. Classification
+
+The **PointCloudClassifier** detected and classified planar surfaces into roofs and facades. The process included:
+- **Plane Detection**: Using the RANSAC algorithm to extract flat surfaces from the segmented point cloud.
+- **Classification**: Analyzing the orientation of each plane's normal vector and its height to distinguish between walls and roofs.
+
+##### Methods
+- **`detect_planes()`**: Identifies planar surfaces using the RANSAC algorithm.
+- **`classify_planes(planes, normals, min_roof_height)`**: Classifies planes into walls (vertical) and roofs (horizontal).
+- **`process()`**: Executes the entire classification pipeline.
+
+---
+
+#### 5. Visualization
+
+The **PointCloudVisualizer** rendered the results for analysis. Classified walls were colored blue, and roofs were colored red to provide a clear visual distinction.
+
+##### Methods
+- **`prepare_classified_clouds(walls, roofs)`**: Combines walls and roofs into a single colored point cloud.
+- **`visualize()`**: Displays the current point cloud.
+- **`visualize_classified_clouds(walls, roofs)`**: Visualizes walls and roofs with assigned colors.
+
+-----------------------edit this-------------------
+
 ## 3. Implementation
 
-![Methodology](assets/Methodology.png)
+
 
 The implementation was carried out using Python with the Open3D library. Key modules in the pipeline include:
 
